@@ -1,10 +1,17 @@
 # dataset settings
-dataset_type = 'ChaseDB1Dataset'
-data_root = 'data/CHASE_DB1'
+dataset_type = 'MyACDCDataset'
+data_root = 'data/ACDC'
+# 偶尔会修改
+step='s1'
+
+# 这里的mean和std好像是模型初始化用的
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-img_scale = (960, 999)
-crop_size = (128, 128)
+
+# 偶尔会修改
+img_scale = (300,300)
+crop_size = (256,256)
+
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations'),
@@ -21,11 +28,11 @@ test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        img_scale=img_scale,
+        img_scale=crop_size,
         # img_ratios=[0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0],
         flip=False,
         transforms=[
-            dict(type='Resize', keep_ratio=True),
+            dict(type='Resize', keep_ratio=False),
             dict(type='RandomFlip'),
             dict(type='Normalize', **img_norm_cfg),
             dict(type='ImageToTensor', keys=['img']),
@@ -36,25 +43,26 @@ test_pipeline = [
 data = dict(
     samples_per_gpu=4,
     workers_per_gpu=1,
+    shuffle=True,
     train=dict(
         type='RepeatDataset',
-        # 重复了40000倍的数据集，因为训练集只有20张
-        times=40000,
+        # s1->530 s2->800
+        times=400,
         dataset=dict(
             type=dataset_type,
             data_root=data_root,
-            img_dir='images/training',
-            ann_dir='annotations/training',
+            img_dir=step+'/images/training',
+            ann_dir=step+'/annotations/training',
             pipeline=train_pipeline)),
     val=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir='images/validation',
-        ann_dir='annotations/validation',
+        img_dir=step+'/images/validation',
+        ann_dir=step+'/annotations/validation',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir='images/validation',
-        ann_dir='annotations/validation',
+        img_dir=step+'/images/validation',
+        ann_dir=step+'/annotations/validation',
         pipeline=test_pipeline))

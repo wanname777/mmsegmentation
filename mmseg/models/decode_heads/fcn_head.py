@@ -83,6 +83,8 @@ class FCNHead(BaseDecodeHead):
 
     def forward(self, inputs):
         """Forward function."""
+        # in_channels->channels->channels->out_channels
         output = self._forward_feature(inputs)
+        # print(output.shape)
         output = self.cls_seg(output)
         return output

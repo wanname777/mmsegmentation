@@ -74,7 +74,7 @@ class CustomDataset(Dataset):
     """
 
     CLASSES = None
-
+    # palette代表每个类别的RGB颜色
     PALETTE = None
 
     def __init__(self,

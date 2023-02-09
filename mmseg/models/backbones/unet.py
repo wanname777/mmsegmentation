@@ -411,7 +411,7 @@ class UNet(BaseModule):
         for i in reversed(range(len(self.decoder))):
             x = self.decoder[i](enc_outs[i], x)
             dec_outs.append(x)
-
+        # print(dec_outs[-1].shape)
         return dec_outs
 
     def train(self, mode=True):

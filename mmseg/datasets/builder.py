@@ -69,20 +69,27 @@ def build_dataset(cfg, default_args=None):
     from .dataset_wrappers import (ConcatDataset, MultiImageMixDataset,
                                    RepeatDataset)
     if isinstance(cfg, (list, tuple)):
+        print("进行了判断isinstance(cfg, (list, tuple)")
         dataset = ConcatDataset([build_dataset(c, default_args) for c in cfg])
     elif cfg['type'] == 'RepeatDataset':
+        print("进行了判断cfg['type'] == 'RepeatDataset'")
         dataset = RepeatDataset(
             build_dataset(cfg['dataset'], default_args), cfg['times'])
     elif cfg['type'] == 'MultiImageMixDataset':
+        print("进行了判断cfg['type'] == 'MultiImageMixDataset'")
         cp_cfg = copy.deepcopy(cfg)
         cp_cfg['dataset'] = build_dataset(cp_cfg['dataset'])
         cp_cfg.pop('type')
         dataset = MultiImageMixDataset(**cp_cfg)
     elif isinstance(cfg.get('img_dir'), (list, tuple)) or isinstance(
             cfg.get('split', None), (list, tuple)):
+        print("进行了判断isinstance(cfg.get('img_dir'), (list, tuple)) or...")
         dataset = _concat_dataset(cfg, default_args)
     else:
+        print("进行了最后的else判断")
+        # type写成特殊的数据集名字就会走最后一条，会利用注册器类（Registry）并调用build_from_cfg方法
         dataset = build_from_cfg(cfg, DATASETS, default_args)
+        print(dataset)
 
     return dataset
 

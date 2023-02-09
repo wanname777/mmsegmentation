@@ -194,7 +194,7 @@ def main():
     cfg.seed = seed
     meta['seed'] = seed
     meta['exp_name'] = osp.basename(args.config)
-
+    # 主要的模型构建函数
     model = build_segmentor(
         cfg.model,
         train_cfg=cfg.get('train_cfg'),
@@ -210,7 +210,7 @@ def main():
         model = revert_sync_batchnorm(model)
 
     logger.info(model)
-
+    # 构建数据集
     datasets = [build_dataset(cfg.data.train)]
     if len(cfg.workflow) == 2:
         val_dataset = copy.deepcopy(cfg.data.val)

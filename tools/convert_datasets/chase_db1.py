@@ -4,7 +4,6 @@ import os
 import os.path as osp
 import tempfile
 import zipfile
-
 import mmcv
 
 CHASE_DB1_LEN = 28 * 3

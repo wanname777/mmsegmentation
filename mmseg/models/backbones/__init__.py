@@ -21,10 +21,19 @@ from .twins import PCPVT, SVT
 from .unet import UNet
 from .vit import VisionTransformer
 
+from .myunet import MyUnet
+from .my_swin_unet import MySwinUnet
+from .vision_transformer import SwinUnet
+from .another_swin_unwt import AnotherSwinUnet
+from .my_swin_unet_v2 import MySwinUnetV2
+from .my_swin_unet_v2_linear import MySwinUnetV2Linear
+from .my_pvt_unet_v2 import MyPvtUnetV2
 __all__ = [
     'ResNet', 'ResNetV1c', 'ResNetV1d', 'ResNeXt', 'HRNet', 'FastSCNN',
     'ResNeSt', 'MobileNetV2', 'UNet', 'CGNet', 'MobileNetV3',
     'VisionTransformer', 'SwinTransformer', 'MixVisionTransformer',
     'BiSeNetV1', 'BiSeNetV2', 'ICNet', 'TIMMBackbone', 'ERFNet', 'PCPVT',
-    'SVT', 'STDCNet', 'STDCContextPathNet', 'BEiT', 'MAE'
+    'SVT', 'STDCNet', 'STDCContextPathNet', 'BEiT', 'MAE','MyUnet','MySwinUnet',
+    'SwinUnet','AnotherSwinUnet','MySwinUnetV2','MySwinUnetV2Linear',
+    'MyPvtUnetV2'
 ]
